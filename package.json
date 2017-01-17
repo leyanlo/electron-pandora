@@ -1,10 +1,11 @@
 {
-  "name": "electron-quick-start",
+  "name": "Pandora",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A Pandora Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=out"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -14,9 +15,10 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
+  "author": "Leyan Lo",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "electron-packager": "^8.5.0"
   }
 }
