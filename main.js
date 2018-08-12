@@ -252,11 +252,6 @@ function createDefaultMenu() {
   Menu.setApplicationMenu(menu);
 }
 
-app.commandLine.appendSwitch('ppapi-flash-path',
-    path.join(__dirname, 'lib/24.0.0.194/PepperFlashPlayer.plugin'));
-
-app.commandLine.appendSwitch('ppapi-flash-version', '24.0.0.194');
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
