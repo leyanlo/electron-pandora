@@ -1,0 +1,9 @@
+{
+  "src": "out/Pandora-linux-x64",
+  "dest": "dist/installers",
+  "icon": "resources/icon.png",
+  "categories": [
+    "AudioVideo",
+    "Audio"
+  ]
+}
