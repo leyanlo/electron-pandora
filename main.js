@@ -5,6 +5,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const globalShortcut = electron.globalShortcut;
 const Menu = electron.Menu;
+const windowStateKeeper = require('electron-window-state');
 
 const path = require('path');
 
@@ -14,15 +15,22 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
+  let mainWindowState = windowStateKeeper({
+      defaultWidth: 1280,
+      defaultHeight: 720
+  });
+
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     webPreferences: {
       nodeIntegration: false,
-      plugins: true
     }
   });
 
+  mainWindowState.manage(mainWindow)
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
