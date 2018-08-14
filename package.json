@@ -1,6 +1,6 @@
 {
   "name": "Pandora",
-  "version": "0.1.0b",
+  "version": "0.1.0",
   "description": "A Pandora Electron application",
   "main": "main.js",
   "scripts": {
