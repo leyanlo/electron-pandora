@@ -6,6 +6,7 @@ const BrowserWindow = electron.BrowserWindow;
 const globalShortcut = electron.globalShortcut;
 const Menu = electron.Menu;
 const windowStateKeeper = require('electron-window-state');
+const {shell} = require('electron');
 
 const path = require('path');
 
@@ -149,30 +150,22 @@ function createDefaultMenu() {
       role: 'help',
       submenu: [
         {
-          label: 'Learn More',
-          click () {
-            shell.openExternal('http://electron.atom.io')
-          }
+            label: 'Learn More',
+            click () {
+                shell.openExternal('https://github.com/leyanlo/electron-pandora')
+            }
         },
         {
-          label: 'Documentation',
-          click () {
-            shell.openExternal(
-                `https://github.com/electron/electron/tree/v${process.versions.electron}/docs#readme`
-            )
-          }
+            label: 'Documentation',
+            click () {
+                shell.openExternal('https://github.com/leyanlo/electron-pandora/blob/master/README.md')
+            }
         },
         {
-          label: 'Community Discussions',
-          click () {
-            shell.openExternal('https://discuss.atom.io/c/electron')
-          }
-        },
-        {
-          label: 'Search Issues',
-          click () {
-            shell.openExternal('https://github.com/electron/electron/issues')
-          }
+            label: 'Search Issues',
+            click () {
+                shell.openExternal('https://github.com/leyanlo/electron-pandora/issues')
+            }
         }
       ]
     }
@@ -244,7 +237,7 @@ function createDefaultMenu() {
       {
         role: 'front'
       }
-    ]
+    ];
   } else {
     template.unshift({
       label: 'File',
