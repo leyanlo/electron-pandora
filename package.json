@@ -5,13 +5,16 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=out"
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=out",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icon.png --prune=true --out=out",
+    "build-debian": "electron-installer-debian --src=out/Pandora-linux-x64/ --dest=dist/installers/ --arch=amd64"
   },
   "repository": "https://github.com/leyanlo/electron-pandora",
   "author": "Leyan Lo",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.7",
+    "electron-installer-debian": "^0.8.1",
     "electron-packager": "^12.1.0"
   },
   "dependencies": {
