@@ -1,7 +1,4 @@
+.DS_Store
+.idea/
 node_modules
-
-\.idea/
-
 out/
-
-\.DS_Store
