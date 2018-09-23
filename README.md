@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="icon.png" width="64">
+  <img src="resources/icon.png" width="64">
   <h3 align="center">electron-pandora</h3>
-  <p align="center">Pandora desktop Mac app with global media key support<p>
+  <p align="center">Pandora desktop app with global media key support<p>
 </p>
 
 ## Download
 
-[Download latest release](https://github.com/leyanlo/electron-pandora/releases/latest) (macOS only)
+[Download latest release](https://github.com/leyanlo/electron-pandora/releases/latest) (macOS and Linux)
  
 ## Screenshot
 
@@ -37,7 +37,7 @@ npm install
 # Run the app
 npm start
 # Build the app
-npm run package-mac
+npm run package-mac # (or package-linux for Linux)
 ```
 
 #### License [CC0 1.0 (Public Domain)](LICENSE.md)
