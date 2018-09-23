@@ -8,17 +8,15 @@ const Menu = electron.Menu;
 const windowStateKeeper = require('electron-window-state');
 const {shell} = require('electron');
 
-const path = require('path');
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   let mainWindowState = windowStateKeeper({
-      defaultWidth: 1280,
-      defaultHeight: 720
+    defaultWidth: 1280,
+    defaultHeight: 720
   });
 
   mainWindow = new BrowserWindow({
@@ -31,7 +29,7 @@ function createWindow () {
     }
   });
 
-  mainWindowState.manage(mainWindow)
+  mainWindowState.manage(mainWindow);
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
@@ -55,7 +53,7 @@ function createWindow () {
     });
   });
 
-  globalShortcut.register('medianexttrack', function() {
+  globalShortcut.register('medianexttrack', function () {
     // console.log('medianexttrack pressed');
     mainWindow.webContents.sendInputEvent({
       type: "keyDown",
@@ -150,22 +148,22 @@ function createDefaultMenu() {
       role: 'help',
       submenu: [
         {
-            label: 'Learn More',
-            click () {
-                shell.openExternal('https://github.com/leyanlo/electron-pandora')
-            }
+          label: 'Learn More',
+          click() {
+            shell.openExternal('https://github.com/leyanlo/electron-pandora')
+          }
         },
         {
-            label: 'Documentation',
-            click () {
-                shell.openExternal('https://github.com/leyanlo/electron-pandora/blob/master/README.md')
-            }
+          label: 'Documentation',
+          click() {
+            shell.openExternal('https://github.com/leyanlo/electron-pandora/blob/master/README.md')
+          }
         },
         {
-            label: 'Search Issues',
-            click () {
-                shell.openExternal('https://github.com/leyanlo/electron-pandora/issues')
-            }
+          label: 'Search Issues',
+          click() {
+            shell.openExternal('https://github.com/leyanlo/electron-pandora/issues')
+          }
         }
       ]
     }
