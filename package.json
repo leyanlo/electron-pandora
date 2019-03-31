@@ -1,5 +1,5 @@
 {
-  "name": "Pandora",
+  "name": "electron-pandora",
   "version": "0.1.1",
   "description": "A Pandora Electron application",
   "main": "main.js",

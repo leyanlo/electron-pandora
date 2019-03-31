@@ -33,6 +33,17 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
+  mainWindow.on('close', function (event) {
+    // On macOS, most users are used to an application continuing to run
+    // in the background when the window is closed. This emulates the
+    // same behavior and allows closing the window to continue playing the
+    // radio.
+    if (process.platform === 'darwin') {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
@@ -42,7 +53,8 @@ function createWindow() {
   });
 
   globalShortcut.register('mediaplaypause', function () {
-    // console.log('mediaplaypause pressed');
+    // When the playpause function key is pressed, toggle playback by
+    // using Pandora's spacebar shortcut.
     mainWindow.webContents.sendInputEvent({
       type: "keyDown",
       keyCode: "\u0020"
@@ -54,7 +66,8 @@ function createWindow() {
   });
 
   globalShortcut.register('medianexttrack', function () {
-    // console.log('medianexttrack pressed');
+    // When the nexttrack function key is pressed, skip to the next
+    // track using Pandora's right arrow key shortcut.
     mainWindow.webContents.sendInputEvent({
       type: "keyDown",
       keyCode: "right"
@@ -266,9 +279,16 @@ app.on('window-all-closed', function () {
 });
 
 app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
+    // On macOS, reopen the app if there are no windows open but
+    // the application is running.
     createWindow()
+  } else if (!mainWindow.isVisible()) {
+    // If the window is open but hidden (i.e. closed by a macOS
+    // user and running in the background), show it.
+    mainWindow.show();
+  } else {
+    // If the window is already open, bring it to the forefront.
+    mainWindow.focus();
   }
 });
