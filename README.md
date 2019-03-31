@@ -7,7 +7,7 @@
 ## Download
 
 [Download latest release](https://github.com/leyanlo/electron-pandora/releases/latest) (macOS and Linux)
- 
+
 ## Screenshot
 
 <img src="screenshot.png" width="640">
@@ -33,11 +33,11 @@ git clone https://github.com/leyanlo/electron-pandora
 # Go into the repository
 cd electron-pandora
 # Install dependencies
-npm install
+yarn
 # Run the app
-npm start
+yarn start
 # Build the app
-npm run package-mac # (or package-linux for Linux)
+yarn package-mac # (or package-linux for Linux)
 ```
 
 #### License [CC0 1.0 (Public Domain)](LICENSE.md)
