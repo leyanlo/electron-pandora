@@ -34,12 +34,13 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
-  mainWindow.on('close', function () {
+  mainWindow.on('close', function (event) {
     // On macOS, most users are used to an application continuing to run
     // in the background when the window is closed. This emulates the
     // same behavior and allows closing the window to continue playing the
     // radio.
-    if (process.platform === 'darwin') {
+    if (process.platform === 'darwin' && !quitOnClose) {
+      event.preventDefault();
       mainWindow.hide();
     }
   });
@@ -246,14 +247,6 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
-  }
-});
-
-app.on('will-quit', function (event) {
-  // Prevent quitting when the main window is closed, unless the
-  // user quit with Cmd + Q.
-  if (process.platform === 'darwin' && !quitOnClose) {
-    event.preventDefault();
   }
 });
 
