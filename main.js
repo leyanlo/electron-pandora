@@ -11,6 +11,7 @@ const {shell} = require('electron');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let quitOnClose = false;
 
 function createWindow() {
   // Create the browser window.
@@ -33,13 +34,12 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
-  mainWindow.on('close', function (event) {
+  mainWindow.on('close', function () {
     // On macOS, most users are used to an application continuing to run
     // in the background when the window is closed. This emulates the
     // same behavior and allows closing the window to continue playing the
     // radio.
     if (process.platform === 'darwin') {
-      event.preventDefault();
       mainWindow.hide();
     }
   });
@@ -82,41 +82,7 @@ function createWindow() {
 }
 
 function createDefaultMenu() {
-  if (Menu.getApplicationMenu()) return;
-
   const template = [
-    {
-      label: 'Edit',
-      submenu: [
-        {
-          role: 'undo'
-        },
-        {
-          role: 'redo'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'cut'
-        },
-        {
-          role: 'copy'
-        },
-        {
-          role: 'paste'
-        },
-        {
-          role: 'pasteandmatchstyle'
-        },
-        {
-          role: 'delete'
-        },
-        {
-          role: 'selectall'
-        }
-      ]
-    },
     {
       label: 'View',
       submenu: [
@@ -212,7 +178,12 @@ function createDefaultMenu() {
           type: 'separator'
         },
         {
-          role: 'quit'
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: function () {
+            quitOnClose = true;
+            app.quit();
+          }
         }
       ]
     });
@@ -274,7 +245,15 @@ app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
+  }
+});
+
+app.on('will-quit', function (event) {
+  // Prevent quitting when the main window is closed, unless the
+  // user quit with Cmd + Q.
+  if (process.platform === 'darwin' && !quitOnClose) {
+    event.preventDefault();
   }
 });
 
@@ -282,7 +261,7 @@ app.on('activate', function () {
   if (mainWindow === null) {
     // On macOS, reopen the app if there are no windows open but
     // the application is running.
-    createWindow()
+    createWindow();
   } else if (!mainWindow.isVisible()) {
     // If the window is open but hidden (i.e. closed by a macOS
     // user and running in the background), show it.
