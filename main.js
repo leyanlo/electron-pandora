@@ -53,33 +53,33 @@ function createWindow() {
     mainWindow = null
   });
 
-  globalShortcut.register('mediaplaypause', function () {
-    // When the playpause function key is pressed, toggle playback by
-    // using Pandora's spacebar shortcut.
-    mainWindow.webContents.sendInputEvent({
-      type: "keyDown",
-      keyCode: "\u0020"
-    });
-    mainWindow.webContents.sendInputEvent({
-      type: "keyUp",
-      keyCode: "\u0020"
+  // ►|| Toggle play/pause with space shortcut
+  globalShortcut.register('mediaplaypause', () => pressShortcut('Space'));
+
+  // ►| Skip to next track with right arrow shortcut
+  globalShortcut.register('MediaNextTrack', () => pressShortcut('Right'));
+
+  // ⌥ ►| Mark song as "liked" (if it is not already)
+  globalShortcut.register('MediaPreviousTrack', function () {
+    mainWindow.webContents.executeJavaScript(`
+      document.querySelector('.ThumbUpButton').classList.contains('ThumbUpButton--active')
+    `).then(function (isAlreadyLiked) {
+      if (!isAlreadyLiked) {
+        pressShortcut('+');
+      }
     });
   });
 
-  globalShortcut.register('medianexttrack', function () {
-    // When the nexttrack function key is pressed, skip to the next
-    // track using Pandora's right arrow key shortcut.
-    mainWindow.webContents.sendInputEvent({
-      type: "keyDown",
-      keyCode: "right"
-    });
-    mainWindow.webContents.sendInputEvent({
-      type: "keyUp",
-      keyCode: "right"
-    });
-  });
+  // ⌥ |◄ Mark song as "disliked"
+  globalShortcut.register('Alt+MediaPreviousTrack', () => pressShortcut('-'));
 
   createDefaultMenu();
+
+  function pressShortcut(keyCode) {
+    console.log('pressing shortcut', keyCode);
+    mainWindow.webContents.sendInputEvent({ type: 'keyDown', keyCode });
+    mainWindow.webContents.sendInputEvent({ type: 'keyUp', keyCode });
+  }
 }
 
 function createDefaultMenu() {
