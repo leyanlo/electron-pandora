@@ -13,11 +13,25 @@ const {shell} = require('electron');
 let mainWindow;
 let quitOnClose = false;
 
+function generateButtonClickScript (buttonClass) {
+  return `
+    (function () {
+      const button = document.querySelector('.${buttonClass}');
+      if (!button.classList.contains('${buttonClass}--active')) {
+        button.click();
+      }
+    })();
+  `;
+}
+
+const likeButtonScript = generateButtonClickScript('ThumbUpButton');
+const dislikeButtonScript = generateButtonClickScript('ThumbDownButton');
+
 function createWindow() {
   // Create the browser window.
   let mainWindowState = windowStateKeeper({
-    defaultWidth: 1280,
-    defaultHeight: 720
+    defaultWidth: 320,
+    defaultHeight: 560
   });
 
   mainWindow = new BrowserWindow({
@@ -25,6 +39,7 @@ function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: false,
     }
@@ -53,30 +68,25 @@ function createWindow() {
     mainWindow = null
   });
 
-  // ►|| Toggle play/pause with space shortcut
-  globalShortcut.register('mediaplaypause', () => pressShortcut('Space'));
+  // ⏯ Toggle play/pause with space shortcut
+  globalShortcut.register('MediaPlayPause', () => pressShortcut('Space'));
 
-  // ►| Skip to next track with right arrow shortcut
+  // ⏩ Skip to next track with right arrow shortcut
   globalShortcut.register('MediaNextTrack', () => pressShortcut('Right'));
 
-  // ⌥ ►| Mark song as "liked" (if it is not already)
+  // ⏪ Mark song as "liked" (if it is not already)
   globalShortcut.register('MediaPreviousTrack', function () {
-    mainWindow.webContents.executeJavaScript(`
-      document.querySelector('.ThumbUpButton').classList.contains('ThumbUpButton--active')
-    `).then(function (isAlreadyLiked) {
-      if (!isAlreadyLiked) {
-        pressShortcut('+');
-      }
-    });
+    mainWindow.webContents.executeJavaScript(likeButtonScript);
   });
 
-  // ⌥ |◄ Mark song as "disliked"
-  globalShortcut.register('Alt+MediaPreviousTrack', () => pressShortcut('-'));
+  // ⌘⌥6 Mark song as "disliked"
+  globalShortcut.register('CmdOrCtrl+Alt+6', function () {
+    mainWindow.webContents.executeJavaScript(dislikeButtonScript);
+  });
 
   createDefaultMenu();
 
   function pressShortcut(keyCode) {
-    console.log('pressing shortcut', keyCode);
     mainWindow.webContents.sendInputEvent({ type: 'keyDown', keyCode });
     mainWindow.webContents.sendInputEvent({ type: 'keyUp', keyCode });
   }

@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "node ./packager.js darwin",
-    "package-linux": "node ./packager.js linux",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=resources/icon.icns --prune=true --asar --out=out",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=resources/icon.png --prune=true --asar --out=out",
     "build-debian": "electron-installer-debian --arch=amd64 --config debian-config.json"
   },
   "repository": "https://github.com/leyanlo/electron-pandora",
@@ -15,8 +15,7 @@
   "devDependencies": {
     "electron": "^2.0.7",
     "electron-installer-debian": "^0.8.1",
-    "electron-packager": "^12.1.0",
-    "electron-rebuild": "^1.8.4"
+    "electron-packager": "^12.1.0"
   },
   "dependencies": {
     "electron-window-state": "^4.1.1"

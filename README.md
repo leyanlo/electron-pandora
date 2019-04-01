@@ -1,31 +1,31 @@
-<p align="center">
-  <img src="resources/icon.png" width="64">
-  <h3 align="center">electron-pandora</h3>
-  <p align="center">Pandora desktop app with global media key support<p>
-</p>
+<div style="text-align: center;">
+  <h3>electron-pandora</h3>
+  <img src="resources/icon.png" style="width: 64px;">
+  <p>Pandora desktop app with global media key support</p>
+  <hr>
+  <img src="screenshot.png" style="width: 100%; max-width: 640px;">
+</div>
 
 ## Download
 
 [Download latest release](https://github.com/leyanlo/electron-pandora/releases/latest) (macOS and Linux)
 
-## Screenshot
-
-<img src="screenshot.png" width="640">
-
 ## Usage
 
 ### Key bindings
 
-<table>
-<tbody>
-<tr><td> Play/pause </td><td>⏯</td></tr>
-<tr><td> Next track </td><td>⏩</td></tr>
-</tbody>
-</table>
+|Shortcut|Command|
+|:------:|:------|
+|⏯|Toggle play/pause|
+|⏩|Skip track|
+|⏪|Thumb up track|
+|<kbd>⌘</kbd><kbd>⌥</kbd><kbd>6</kbd>|Thumb down track|
 
 ## Development
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this repository you'll need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/), and [yarn](https://yarnpkg.com).
+
+From your command line:
 
 ```bash
 # Clone this repository
