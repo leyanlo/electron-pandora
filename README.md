@@ -1,9 +1,9 @@
-<div style="text-align: center;">
+<div align="center">
   <h3>electron-pandora</h3>
-  <img src="resources/icon.png" style="width: 64px;">
+  <img src="resources/icon.png" width="64">
   <p>Pandora desktop app with global media key support</p>
   <hr>
-  <img src="screenshot.png" style="width: 100%; max-width: 640px;">
+  <img src="screenshot.png" width="640">
 </div>
 
 ## Download
