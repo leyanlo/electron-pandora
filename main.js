@@ -282,6 +282,10 @@ app.on('window-all-closed', function () {
   }
 });
 
+app.on('will-quit', function () {
+  globalShortcut.unregisterAll();
+});
+
 app.on('activate', function () {
   if (mainWindow === null) {
     // On macOS, reopen the app if there are no windows open but
