@@ -13,7 +13,6 @@ const {shell} = require('electron');
 let mainWindow;
 
 function createWindow() {
-  // Create the browser window.
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1280,
     defaultHeight: 720
@@ -33,16 +32,27 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
-  mainWindow.on('close', function (event) {
-    // On macOS, most users are used to an application continuing to run
-    // in the background when the window is closed. This emulates the
-    // same behavior and allows closing the window to continue playing the
-    // radio.
-    if (process.platform === 'darwin') {
-      event.preventDefault();
-      mainWindow.hide();
-    }
-  });
+  // Only register Mac specific listeners if on Mac
+  if(process.platform === 'darwin') {
+    var wasForceQuit = false;
+
+    // Called before an app is quit. Should only be called when the app is actually quit ( https://electronjs.org/docs/api/app#event-before-quit )
+    app.on('before-quit', function(event) {
+      wasForceQuit = true;
+    })
+
+    mainWindow.on('close', function (event) {
+      // On macOS, most users are used to an application continuing to run
+      // in the background when the window is closed. This emulates the
+      // same behavior and allows closing the window to continue playing the
+      // radio.
+        if(!wasForceQuit) {
+          event.preventDefault();
+        }
+        mainWindow.hide();
+    });
+  }
+
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
