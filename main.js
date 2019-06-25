@@ -29,7 +29,6 @@ function createWindow() {
   });
 
   mainWindowState.manage(mainWindow);
-  // and load the index.html of the app.
   mainWindow.loadURL("https://www.pandora.com");
 
   // Only register Mac specific listeners if on Mac
@@ -59,12 +58,12 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    mainWindow = null;
   });
 
   globalShortcut.register('mediaplaypause', function () {
-    // When the playpause function key is pressed, toggle playback by
-    // using Pandora's spacebar shortcut.
+    // When the 'playpause' function key is pressed, toggle playback by
+    // using Pandora's 'spacebar' shortcut.
     mainWindow.webContents.sendInputEvent({
       type: "keyDown",
       keyCode: "\u0020"
@@ -92,7 +91,8 @@ function createWindow() {
 }
 
 function createDefaultMenu() {
-  if (Menu.getApplicationMenu()) return;
+  if (Menu.getApplicationMenu())
+      return;
 
   const template = [
     {
@@ -132,6 +132,9 @@ function createDefaultMenu() {
       submenu: [
         {
           role: 'reload'
+        },
+        {
+          role: 'forceReload'
         },
         {
           role: 'toggledevtools'
@@ -267,7 +270,7 @@ function createDefaultMenu() {
           role: 'quit'
         }
       ]
-    })
+    });
   }
 
   const menu = Menu.buildFromTemplate(template);
@@ -284,7 +287,7 @@ app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 });
 
@@ -292,7 +295,7 @@ app.on('activate', function () {
   if (mainWindow === null) {
     // On macOS, reopen the app if there are no windows open but
     // the application is running.
-    createWindow()
+    createWindow();
   } else if (!mainWindow.isVisible()) {
     // If the window is open but hidden (i.e. closed by a macOS
     // user and running in the background), show it.
