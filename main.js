@@ -11,6 +11,7 @@ const {shell} = require('electron');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let wasForceQuit = false;
 
 function createWindow() {
   let mainWindowState = windowStateKeeper({
@@ -33,13 +34,6 @@ function createWindow() {
 
   // Only register Mac specific listeners if on Mac
   if(process.platform === 'darwin') {
-    var wasForceQuit = false;
-
-    // Called before an app is quit. Should only be called when the app is actually quit ( https://electronjs.org/docs/api/app#event-before-quit )
-    app.on('before-quit', function(event) {
-      wasForceQuit = true;
-    })
-
     mainWindow.on('close', function (event) {
       // On macOS, most users are used to an application continuing to run
       // in the background when the window is closed. This emulates the
@@ -282,14 +276,24 @@ function createDefaultMenu() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+if(process.platform === 'darwin') {
+    // MacOS Listeners
+
+    // Called before an app is quit. Should only be called when the app is actually quit ( https://electronjs.org/docs/api/app#event-before-quit )
+    app.on('before-quit', function() {
+        wasForceQuit = true;
+    });
+
+} else {
+    // All other operating systems
+
+    // Quit when all windows are closed.
+    // This is excluded from Darwin as in OS X it is common for applications and
+    // their menu bar to stay active until the user quits explicitly with Cmd + Q
+    app.on('window-all-closed', function () {
+        app.quit();
+    });
+}
 
 app.on('activate', function () {
   if (mainWindow === null) {
